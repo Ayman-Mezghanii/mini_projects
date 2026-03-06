@@ -348,9 +348,10 @@ arduino-7segment-counter/
 ├── src/
 │   └── counter.ino
 └── images/
-    ├── wiring.png
+    ├── 7segmantWiring.png
     ├── display_pinout.png
-    └── demo.jpg
+    ├── resistorPinout.png
+    └── wiringtable.jpg
 ```
 
 ---
