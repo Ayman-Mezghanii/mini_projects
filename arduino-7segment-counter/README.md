@@ -190,48 +190,34 @@ const byte resetPin=A1;
 
 int n=0;
 byte dig[4]={0,0,0,0};
-
+// ---- Button (debounced edge detect) ----
 struct DebouncedButton {
+  byte pin;
+  bool lastReading = HIGH;
+  bool stableState = HIGH;
+  unsigned long lastChangeMs = 0;
 
-byte pin;
-bool lastReading;
-bool stableState;
-unsigned long lastChangeMs;
+  void begin() const { pinMode(pin, INPUT_PULLUP); }
 
-DebouncedButton(byte p){
-pin=p;
-lastReading=HIGH;
-stableState=HIGH;
-lastChangeMs=0;
-}
+  // returns true exactly once when the button is pressed (HIGH->LOW)
+  bool pressed(unsigned long nowMs) {
+    bool reading = digitalRead(pin);
 
-void begin() const{
-pinMode(pin,INPUT_PULLUP);
-}
+    if (reading != lastReading) {
+      lastChangeMs = nowMs;
+      lastReading = reading;
+    }
 
-bool pressed(unsigned long nowMs){
-
-bool reading=digitalRead(pin);
-
-if(reading!=lastReading){
-lastChangeMs=nowMs;
-lastReading=reading;
-}
-
-if((nowMs-lastChangeMs)>=DEBOUNCE_MS && reading!=stableState){
-
-stableState=reading;
-
-if(stableState==LOW)
-return true;
-}
-
-return false;
-}
+    if ((nowMs - lastChangeMs) >= DEBOUNCE_MS && reading != stableState) {
+      stableState = reading;
+      if (stableState == LOW) return true;
+    }
+    return false;
+  }
 };
 
-DebouncedButton btnInc(incPin);
-DebouncedButton btnReset(resetPin);
+DebouncedButton btnInc  ;
+DebouncedButton btnReset ;
 
 inline void updateDigitsFromN(){
 
@@ -261,7 +247,8 @@ digitalWrite(pSegment[s],(mask>>s)&1);
 }
 
 void setup(){
-
+btnInc.pin = incPin;
+btnReset.pin = resetPin;
 for(byte i=2;i<=13;i++)
 pinMode(i,OUTPUT);
 
