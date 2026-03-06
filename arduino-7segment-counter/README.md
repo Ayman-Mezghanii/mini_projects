@@ -1,5 +1,8 @@
 # Arduino 4-Digit 7-Segment Counter
-
+<p align="center">
+  <img src="image/aicreatedbanner.png" width="900">
+</p>
+![Project Banner](image/aicreatedbanner.png)
 ### Multiplexed Display with Increment and Reset Buttons
 
 A smooth **multiplexed 4-digit 7-segment counter** built with an Arduino Uno and a **SH5461AS common-cathode display**.
