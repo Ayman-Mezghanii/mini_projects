@@ -346,6 +346,7 @@ arduino-7segment-counter/
 │
 ├── README.md
 ├── src/
+    ├── compact_counter.ino
 │   └── counter.ino
 └── images/
     ├── 7segmantWiring.png
